@@ -1,0 +1,14 @@
+.background_third {
+    height: 85vh !important;
+    width: 100% !important;
+    background-color: red;
+}
+
+.footer {
+    position: absolute;
+    top: 95%;
+    transform: translateY(-95%);
+    height: 3rem;
+    width: 100%;
+    opacity: 0.5;
+}

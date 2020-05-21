@@ -1,0 +1,13 @@
+<ion-grid>
+    <ion-row style="text-align: center;">
+        <ion-col size="5" class="ion-align-self-center">
+            <div [style.border-bottom]="color ? 'color 1px solid': 'black 1px solid'" style="width: 60%; float: right;"></div>
+        </ion-col>
+        <ion-col size="2" class="ion-align-self-center">
+            <ion-icon [style.color]="color ? color: 'black'" name="star"></ion-icon>
+        </ion-col>
+        <ion-col size="5" class="ion-align-self-center">
+            <div [style.border-bottom]="color ? 'color 1px solid' : 'black 1px solid'" style="width: 60%; float: left;"></div>
+        </ion-col>
+    </ion-row>
+</ion-grid>

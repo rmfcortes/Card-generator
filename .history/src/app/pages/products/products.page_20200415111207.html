@@ -1,0 +1,104 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>Products</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ng-container *ngIf="infoReady">
+        <ion-grid class="main-grid">
+            <ion-row>
+                <!-- Form -->
+                <ion-col size="7" class="separate-scroll">
+                    <ion-card>
+                        <ion-item>
+                            <ion-label color="medium">{{'PRODUCTS.view' | translate}}</ion-label>
+                            <ion-select [(ngModel)]="profile.view" color="medium" okText="{{'COMMON.ok' | translate}}" cancelText="{{'COMMON.cancel' | translate}}" required>
+                                <ion-select-option value="list-img">{{'PRODUCTS.list-img' | translate}}</ion-select-option>
+                                <ion-select-option value="list">{{'PRODUCTS.list' | translate}}</ion-select-option>
+                                <ion-select-option value="block">{{'PRODUCTS.blocks' | translate}}</ion-select-option>
+                                <ion-select-option value="gallery">{{'PRODUCTS.gallery' | translate}}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-card>
+                    <ion-card>
+                        <ion-item>
+                            <ion-label color="medium">{{'PRODUCTS.sections' | translate}}</ion-label>
+                            <ion-icon slot="end" name="add" color="primary" style="cursor: pointer;" (click)="viewSectionInput = true"></ion-icon>
+                            <ion-icon slot="end" name="chevron-down" color="primary" style="cursor: pointer;" *ngIf="sections.length > 0 && viewSectionList === false" (click)="viewSectionList = true"></ion-icon>
+                            <ion-icon slot="end" name="chevron-down" color="primary" style="cursor: pointer;" *ngIf="sections.length > 0 && viewSectionList === true" (click)="viewSectionList = false"></ion-icon>
+                        </ion-item>
+                        <ion-item *ngIf="viewSectionInput">
+                            <ion-input type="text" [(ngModel)]="newSection" placeholder="{{'PRODUCTS.newSection' | translate}}"></ion-input>
+                            <ion-button slot="end" (click)="addSection()" shape="round">
+                                {{'COMMON.add' | translate}}
+                            </ion-button>
+                        </ion-item>
+                        <ion-reorder-group (ionItemReorder)="doReorder($event)" *ngIf="viewSectionList">
+                            <ion-item *ngFor="let section of sections">
+                                <ion-label color="medium">{{section.name}}</ion-label>
+                            </ion-item>
+                            <ion-reorder slot="end">
+                            </ion-reorder>
+                        </ion-reorder-group>
+                    </ion-card>
+                </ion-col>
+
+                <!-- Template preview -->
+                <ion-col size="5">
+                    <div class="smartphone">
+                        <div class="content" [style.background]="profile.colors.background ? profile.colors.background : 'white'">
+                            <ng-container *ngIf="!loadedProducts; else loadTemplate">
+                                <div [ngSwitch]="profile.view">
+                                    <div *ngSwitchCase="'list-img'">
+                                        <app-list-img [sections]="sections"></app-list-img>
+                                    </div>
+                                    <div *ngSwitchCase="'block'">
+                                        <app-block [sections]="sections"></app-block>
+                                    </div>
+                                    <div *ngSwitchCase="'cards'">
+                                        <app-cards [sections]="sections"></app-cards>
+                                    </div>
+                                    <div *ngSwitchCase="'list'">
+                                        <app-list [sections]="sections"></app-list>
+                                    </div>
+                                    <div *ngSwitchCase="'gallery'">
+                                        <app-gallery [sections]="sections"></app-gallery>
+                                    </div>
+                                    <div *ngSwitchDefault>
+                                        <app-list-img [sections]="sections"></app-list-img>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #loadTemplate>
+                                <ion-item lines="none">
+                                    <ion-spinner style="margin: auto;" name="dots"></ion-spinner>
+                                </ion-item>
+                            </ng-template>
+
+                            <ion-item style="margin-top: 3rem; text-align: center;" *ngIf="noMore" lines="none">
+                                <ion-label color="medium">{{'COMMON.noMore' | translate}}</ion-label>
+                            </ion-item>
+
+                            <ng-container *ngIf="sectionSelected; else elseTemplate">
+                                <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreSectionProducts($event)">
+                                    <ion-infinite-scroll-content loadingSpinner="dots">
+                                    </ion-infinite-scroll-content>
+                                </ion-infinite-scroll>
+                            </ng-container>
+                            <ng-template #elseTemplate>
+                                <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreProducts($event)">
+                                    <ion-infinite-scroll-content loadingSpinner="dots">
+                                    </ion-infinite-scroll-content>
+                                </ion-infinite-scroll>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <ion-button class="btn-save" (click)="save()" expand="block" shape="round">
+                        {{'COMMON.save' | translate}}
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ng-container>
+</ion-content>

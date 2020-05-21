@@ -1,0 +1,61 @@
+<!-- Cover -->
+<div class="frame-cover">
+    <preload-image [ratio]="{w: 1, h: 0.5}" [src]="profile?.cover || noImage"></preload-image>
+</div>
+
+<!-- Profile photo -->
+<div class="frame-photo">
+    <preload-image [ratio]="{w: 1, h: 1}" [src]="profile?.photo || noImageAvatar"></preload-image>
+</div>
+
+<!-- Name -->
+<ion-item lines="none" style="text-align: center;">
+    <ion-label>
+        <h1 class="ion-text-wrap" [style.color]="profile.colors.name">{{profile?.name || 'LOGIN.name' | translate}}</h1>
+        <p class="ion-text-wrap puesto" [style.color]="profile.colors.employment">{{profile?.employment || 'PROFILE.employment' | translate}}</p>
+        <p class="ion-text-wrap puesto" *ngIf="profile?.web" (click)="goPage(profile?.web)" [style.color]="profile.colors.employment">{{profile?.web}}</p>
+    </ion-label>
+</ion-item>
+
+<!-- Contact-->
+<ion-item lines="none" style="text-align: center; margin: 0.75rem 0 0 0;">
+    <ion-label>
+        <h2 class="ion-text-wrap" [style.color]="profile.colors.contactTitle? profile.colors.contactTitle: 'black'">{{'PROFILE.contact' | translate}}</h2>
+    </ion-label>
+</ion-item>
+<app-separador-estrella [color]="profile.colors.contactTitle"></app-separador-estrella>
+
+<!-- Contacto botones -->
+<ion-grid style="margin-bottom: 4rem;">
+    <ion-row>
+        <ion-col *ngFor="let item of profile?.contact">
+            <div>
+                <ion-fab vertical="top" horizontal="center" slot="fixed" (click)="emit(item.action)">
+                    <ion-fab-button [style.--background]="profile.colors.fillButtons">
+                        <ion-icon [name]="item.icon"></ion-icon>
+                    </ion-fab-button>
+                </ion-fab>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+
+<!-- Icon buttons -->
+
+<ion-item lines="none" style="text-align: center; margin: 0.75rem 0 0 0;">
+    <ion-label>
+        <h2 class="ion-text-wrap" [style.color]="profile.colors.contactTitle? profile.colors.contactTitle: 'black'">{{'PROFILE.followMe' | translate}}</h2>
+    </ion-label>
+</ion-item>
+<app-separador-estrella [color]="profile.colors.contactTitle"></app-separador-estrella>
+<ion-grid>
+    <ion-row>
+        <ion-col>
+            <div style="text-align: center;">
+                <ion-button class="iconos" *ngFor="let item of profile?.social_net" (click)="goPage(item.page)" fill="clear" slot="start">
+                    <ion-icon slot="icon-only" size="small" [name]="item.icon"></ion-icon>
+                </ion-button>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-grid>

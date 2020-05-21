@@ -1,0 +1,15 @@
+ion-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    border-radius: 500px;
+    overflow: hidden;
+}
+
+.footer {
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    transform: translateY(-100%);
+}

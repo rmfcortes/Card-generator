@@ -1,0 +1,15 @@
+.frame-cover {
+    width: 100vw;
+}
+
+.frame-photo {
+    height: 30vw;
+    width: 30vw;
+    margin-top: -15vw;
+    margin-left: 35vw;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.10);
+    background: white;
+    overflow: hidden;
+    z-index: 20;
+}

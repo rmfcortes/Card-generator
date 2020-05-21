@@ -1,0 +1,81 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>Map</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ng-container *ngIf="profileReady">
+        <ion-grid class="main-grid">
+            <ion-row>
+                <!-- Form -->
+                <ion-col size="7" class="separate-scroll">
+                    <!-- Address input -->
+                    <ion-card>
+                        <ion-item>
+                            <ion-label position="floating">{{'MAPS.address' | translate}}</ion-label>
+                            <ion-input type="text" id="address" #address [(ngModel)]="profile.address.address"></ion-input>
+                        </ion-item>
+                    </ion-card>
+                    <p style="text-align: center; font-size: small" class="ion-text-wrap" *ngIf="profile.address.address">{{'MAPS.tip' | translate}}</p>
+
+
+                    <!-- Custom pin -->
+                    <ion-card>
+                        <ion-item>
+                            <ion-label color="medium" class="ion-text-wrap">{{'MAPS.pin' | translate}}</ion-label>
+                            <ion-button (click)="pin.click()" expand="block" shape="round">
+                                {{'COMMON.search' | translate}}
+                            </ion-button>
+                            <input style="display: none" (change)="setPin($event)" type="file" #pin>
+                        </ion-item>
+                    </ion-card>
+
+                    <!-- Poi setting -->
+                    <ion-card>
+                        <ion-item>
+                            <ion-label class="ion-text-wrap" color="medium">{{'MAPS.poi' | translate}}</ion-label>
+                            <ion-toggle [(ngModel)]="profile.address.poi" slot="end" (ionChange)="poi($event.detail.checked)"></ion-toggle>
+                        </ion-item>
+                    </ion-card>
+
+
+
+                </ion-col>
+
+                <!-- Template preview -->
+                <ion-col size="5">
+                    <div class="smartphone">
+                        <div class="content" [style.background]="profile.colors.background ? profile.colors.background : 'white'">
+                            <!-- Navigate button -->
+                            <ion-item lines="none" (click)="goMaps()">
+                                <ion-icon slot="end" size="large" name="navigate-circle" [style.color]="profile.colors.fillButtons ? profile.colors.fillButtons : 'black'"></ion-icon>
+                            </ion-item>
+                            <!-- Título y dirección -->
+                            <ion-item lines="none" style="text-align: center">
+                                <ion-label class="ion-text-wrap">
+                                    <h1 [style.color]="profile.colors.contactTitle ? profile.colors.contactTitle : 'black'">{{'MAPS.location' | translate}}</h1>
+                                </ion-label>
+                            </ion-item>
+                            <app-separador-estrella></app-separador-estrella>
+                            <ion-item lines="none" style="text-align: center;">
+                                <ion-label class="ion-text-wrap">
+                                    <h2 [style.color]="profile.colors.name ? profile.colors.name : 'black'">{{profile.address.address}}</h2>
+                                </ion-label>
+                            </ion-item>
+                            <!-- Mapa -->
+                            <div [style.display]="mapReady ? 'initial' : 'none'">
+                                <agm-map style="height: 50vh" [latitude]="profile.address.lat" [longitude]="profile.address.lng" [streetViewControl]="false" [zoom]=15 (mapReady)="mapLoaded($event)">
+                                    <agm-marker [markerDraggable]="true" (dragEnd)="saveLocation($event)" [iconUrl]='{"url": icon,"scaledSize": {"height": 75, "width": 50}}' [latitude]="profile.address.lat" [longitude]="profile.address.lng" [animation]="'DROP'"></agm-marker>
+                                </agm-map>
+                            </div>
+                            <ion-item lines="none" *ngIf="!mapReady">
+                                <ion-spinner style="margin: auto;" name="dots" [style.color]="profile.colors.segmentButton ? profile.colors.segmentButton : 'black'"></ion-spinner>
+                            </ion-item>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ng-container>
+</ion-content>

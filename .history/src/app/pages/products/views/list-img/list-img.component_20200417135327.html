@@ -1,0 +1,48 @@
+<ion-card *ngFor="let item of sections; let i = index" class="main-card fondo-card" [style.display]="item.products && item.products.length > 0 ? 'initial' : 'none'">
+    <ion-list-header class="header">
+        <ion-label>{{item.name | titlecase}}</ion-label>
+    </ion-list-header>
+    <ion-card *ngFor="let prod of item.products; let y = index" class="background-card" style="--padding: 0;">
+        <ion-item style="--padding-start: 0; cursor: pointer;" lines="none" detail (click)="presentProduct(prod)">
+            <ion-grid class="ion-no-padding">
+                <ion-row class="ion-align-items-center" style="background: yellow;">
+                    <ion-col size="4" style="background: orange; height: 100% !important;">
+                        <div style="height: 100%;">
+                            <ion-img [src]="prod.url" style="height: 100% !important;"></ion-img>
+                        </div>
+                    </ion-col>
+                    <ion-col size="8">
+                        <ion-item lines="none">
+                            <ion-label class="ion-text-wrap">
+                                <h2 class="name-product">{{prod.name}}</h2>
+                                <h2 class="price-product" *ngIf="prod.price">{{prod.price | currency:'CAD':'symbol-narrow':'1.0-2'}}</h2>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-card>
+    <!-- <ion-card *ngFor="let prod of item.products; let y = index" class="background-card">
+        <ion-item style="--padding-start: 0" lines="none" detail (click)="presentProduct(prod)">
+            <ion-grid>
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="8">
+                        <ion-item lines="none">
+                            <ion-label class="ion-text-wrap">
+                                <h2 class="name-product">{{prod.name}}</h2>
+                                <h2 class="price-product" *ngIf="prod.price">{{prod.price | currency:'CAD':'symbol-narrow':'1.0-2'}}</h2>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="4">
+                        <div class="radius10 shadow" style="background: white;">
+                            <preload-image [ratio]="{w: 1, h: .75}" [src]="prod.url">
+                            </preload-image>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-card> -->
+</ion-card>

@@ -1,0 +1,20 @@
+<div [id]="item.name" *ngFor="let item of sections; let i = index; let first = first" [style.display]="item.products && item.products.length > 0 ? 'initial' : 'none'">
+    <ion-item lines="none">
+        <h6 class="ion-text-wrap header">{{item.name | titlecase}}</h6>
+    </ion-item>
+    <div class="pins" *ngFor="let prod of item.products; let y = index">
+        <ion-card class="card radius10 background-card pin">
+            <div class="radius10 shadow">
+                <preload-image [ratio]="{w: 1, h: .75}" [src]="prod.url" class="radius10 shadow">
+                </preload-image>
+                <h6 class="ion-text-wrap name-product">{{prod.name}}</h6>
+                <span style="font-size: 13pt; margin: 0;" class="price-product" *ngIf="prod.price">
+                    {{prod.price | currency:'CAD':'symbol-narrow':'1.0-2'}}
+                </span>
+                <span style="font-size: 12pt; margin: 0;" class="price-product" *ngIf="prod.unit">
+                    {{prod.unit}}
+                </span>
+            </div>
+        </ion-card>
+    </div>
+</div>

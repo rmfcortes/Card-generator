@@ -1,0 +1,28 @@
+<ion-card *ngFor="let item of pasillos; let i = index" class="main-card fondo-card" [style.display]="item.productos && item.productos.length > 0 ? 'initial' : 'none'">
+    <ion-list-header class="encabezado">
+        <ion-label class="comfortaa">{{item.nombre | titlecase}}</ion-label>
+    </ion-list-header>
+    <ion-card *ngFor="let prod of item.productos; let y = index" class="fondo-card">
+        <ion-item style="--padding-start: 0" lines="none" detail (click)="irProducto(prod)">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="8">
+                        <ion-item lines="none">
+                            <ion-label class="ion-text-wrap">
+                                <h2 class="nombre-prod">{{prod.nombre}}</h2>
+                                <h3 class="descripcion-prod">{{prod.descripcion}}</h3>
+                                <h2 class="precio-prod" *ngIf="prod.precio">{{prod.precio | currency:'CAD':'symbol-narrow':'1.0-2'}}</h2>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="4">
+                        <div class="border radius10 shadow">
+                            <preload-image [ratio]="{w: 1, h: .75}" [src]="prod.url">
+                            </preload-image>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-card>
+</ion-card>

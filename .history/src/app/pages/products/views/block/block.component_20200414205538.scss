@@ -1,0 +1,21 @@
+.card {
+    text-align: center;
+    padding: .75rem;
+    margin: 0rem;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    white-space: nowrap;
+}
+
+.product-name {
+    height: 75px;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    white-space: nowrap;
+}
+
+.card-container {
+    margin: auto;
+    text-align: center;
+    align-items: center;
+}

@@ -1,0 +1,28 @@
+<!-- Profile photo -->
+<div style="height: 2.5rem;"></div>
+<ion-img [src]="profile.photo" class="border_photo" (ionImgWillLoad)="ionImgWillLoad($event)"></ion-img>
+
+<!-- Data -->
+<ion-item lines="none" style="text-align: center;">
+    <ion-label>
+        <h1 class="ion-text-wrap name">{{profile?.name || 'LOGIN.name' | translate}}</h1>
+        <p class="ion-text-wrap employment">{{profile?.employment || 'PROFILE.employment' | translate}}</p>
+        <p class="ion-text-wrap employment" *ngIf="profile?.web" (click)="goPage(profile?.web)">{{profile?.web}}</p>
+    </ion-label>
+</ion-item>
+
+<hr class="border-contact">
+
+<ion-grid class="ion-no-padding" class="footer">
+    <ion-row>
+        <ion-col size="6" *ngFor="let item of profile?.contact" style="background: orange; height: 7rem;">
+            <div>
+                <ion-icon [name]="item.icon"></ion-icon>
+                <!-- <ion-fab vertical="top" horizontal="center" slot="fixed" (click)="emit(item.action)">
+                <ion-fab-button class="buttons">
+                </ion-fab-button>
+            </ion-fab> -->
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-grid>

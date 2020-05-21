@@ -1,0 +1,12 @@
+<div *ngFor="let item of pasillos; let i = index" [style.display]="item.productos && item.productos.length > 0 ? 'initial' : 'none'">
+    <ion-item lines="none">
+        <h6 class="ion-text-wrap comfortaa encabezado">{{item.nombre | titlecase}}</h6>
+    </ion-item>
+    <ion-card class="fondo-card-bloque">
+        <ion-item *ngFor="let serv of item.productos; let y = index" style="--padding-start: 0" detail>
+            <ion-item lines="none" (click)="irProducto(serv)">
+                <h6 class="ion-text-wrap nombre-prod">{{serv.nombre}}</h6>
+            </ion-item>
+        </ion-item>
+    </ion-card>
+</div>

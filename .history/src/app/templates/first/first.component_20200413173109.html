@@ -1,0 +1,61 @@
+<!-- cover -->
+<div class="marco-cover">
+    <preload-image [ratio]="{w: 1, h: 0.5}" [src]="profile.cover"></preload-image>
+</div>
+
+<!-- Foto perfil -->
+<div class="marco-foto">
+    <preload-image [ratio]="{w: 1, h: 1}" [src]="perfil.foto"></preload-image>
+</div>
+
+<!-- Nombre -->
+<ion-item lines="none" style="text-align: center;">
+    <ion-label>
+        <h1 class="ion-text-wrap nombre">{{perfil.nombre}}</h1>
+        <p class="ion-text-wrap puesto">{{perfil.puesto}}</p>
+        <p class="ion-text-wrap puesto" *ngIf="perfil.web" (click)="goPage(perfil.web)">{{perfil.web}}</p>
+    </ion-label>
+</ion-item>
+
+<!-- Contacto titulo-->
+<ion-item lines="none" style="text-align: center; margin: 0.75rem 0 0 0;">
+    <ion-label>
+        <h2 class="ion-text-wrap colorContacto">Contacto</h2>
+    </ion-label>
+</ion-item>
+<app-separador-estrella></app-separador-estrella>
+
+<!-- Contacto botones -->
+<ion-grid style="margin-bottom: 4rem;">
+    <ion-row>
+        <ion-col *ngFor="let item of perfil.contacto">
+            <div>
+                <ion-fab vertical="top" horizontal="center" slot="fixed" (click)="emite(item.funcion)">
+                    <ion-fab-button class="botones">
+                        <ion-icon [name]="item.icon"></ion-icon>
+                    </ion-fab-button>
+                </ion-fab>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+
+<!-- Botones iconos -->
+
+<ion-item lines="none" style="text-align: center; margin: 0.75rem 0 0 0;">
+    <ion-label>
+        <h2 class="ion-text-wrap colorContacto">Sígueme</h2>
+    </ion-label>
+</ion-item>
+<app-separador-estrella></app-separador-estrella>
+<ion-grid>
+    <ion-row>
+        <ion-col>
+            <div style="text-align: center;">
+                <ion-button class="iconos" *ngFor="let item of perfil.redes" (click)="goPage(item.page)" fill="clear" slot="start">
+                    <ion-icon slot="icon-only" size="small" [name]="item.icon"></ion-icon>
+                </ion-button>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-grid>

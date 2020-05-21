@@ -1,0 +1,28 @@
+<ion-card *ngFor="let item of sections; let i = index" class="main-card fondo-card" [style.display]="item.products && item.products.length > 0 ? 'initial' : 'none'">
+    <ion-list-header [style.color]="profile.colors.segmentButton ? profile.colors.segmentButton : 'black'">
+        <ion-label>{{item.name | titlecase}}</ion-label>
+    </ion-list-header>
+    <ion-card *ngFor="let prod of item.products; let y = index" class="background-card">
+        <ion-item style="--padding-start: 0" lines="none" detail>
+            <ion-grid>
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="8">
+                        <ion-item lines="none">
+                            <ion-label class="ion-text-wrap">
+                                <h2 [style.color]="profile.colors.nameProduct ? profile.colors.nameProduct : 'black'">{{prod.name}}</h2>
+                                <!-- <h3 class="descripcion-prod">{{prod.description}}</h3> -->
+                                <h2 [style.color]="profile.colors.priceProduct ? profile.colors.priceProduct : 'black'" *ngIf="prod.price">{{prod.price | currency:'CAD':'symbol-narrow':'1.0-2'}}</h2>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="4">
+                        <div class="radius10 shadow" style="background: white;">
+                            <preload-image [ratio]="{w: 1, h: .75}" [src]="prod.url">
+                            </preload-image>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-card>
+</ion-card>

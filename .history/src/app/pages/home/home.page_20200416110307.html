@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="primary">
+        <ion-title>
+            {{'MENU.home' | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ng-container *ngIf="profileReady">
+        <ion-grid class="main-grid">
+            <ion-row>
+                <!-- Form -->
+                <ion-col size="7" class="separate-scroll">
+                    <ion-grid fixed class="ion-padding">
+                        <ion-card>
+                            <ion-item>
+                                <ion-label color="medium">{{'PROFILE.background' | translate}}
+                                </ion-label>
+                                <div class="colorPicker" [style.background]="profile.colors.background" (click)="pickerBack = true"> {{profile.colors.background}}</div>
+                                <!-- <input class="colorPicker" [style.background]="profile.colors.background" placeholder="Color" [value]="profile.colors.background" (click)="pickerBack = true"> -->
+                            </ion-item>
+                            <color-sketch *ngIf="pickerBack" [color]="profile.colors.background" (onChangeComplete)="setTheme($event)" (onChange)="profile.colors.background = $event.color.hex"></color-sketch>
+                            <ion-item>
+                                <ion-label color="medium">{{'PROFILE.borders' | translate}}</ion-label>
+                                <input class="colorPicker" [(colorPicker)]="profile.colors.contactTitle" [style.background]="profile.colors.contactTitle" placeholder="Color" [value]="profile.colors.contactTitle" (colorPickerChange)="pendingChanges()">
+                            </ion-item>
+                        </ion-card>
+                        <ion-card>
+                            <ion-item>
+                                <ion-label color="medium">{{'PROFILE.cover' | translate}}</ion-label>
+                                <ion-button (click)="cover.click()" expand="block" shape="round">
+                                    {{'COMMON.search' | translate}}
+                                </ion-button>
+                                <input style="display: none" (change)="cropImage($event, 1/0.5, true, true)" type="file" #cover>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="medium">{{'PROFILE.photo' | translate}}</ion-label>
+                                <ion-button (click)="photo.click()" expand="block" shape="round">
+                                    {{'COMMON.search' | translate}}
+                                </ion-button>
+                                <input style="display: none" (change)="cropImage($event, 1/1, false, true)" type="file" #photo>
+                            </ion-item>
+                        </ion-card>
+                        <ion-card>
+                            <ion-item>
+                                <ion-input style="width: 75%;" type="text" (ionChange)="pendingChanges()" [(ngModel)]="profile.name" placeholder="{{'LOGIN.name' | translate}}"></ion-input>
+                                <input class="colorPicker" (colorPickerChange)="pendingChanges()" [(colorPicker)]="profile.colors.name" [style.background]="profile.colors.name" placeholder="Color" [value]="profile.colors.name">
+                            </ion-item>
+                            <ion-item>
+                                <ion-input style="width: 75%;" type="text" (ionChange)="pendingChanges()" [(ngModel)]="profile.employment" placeholder="{{'PROFILE.employment' | translate}}"></ion-input>
+                                <input class="colorPicker" (colorPickerChange)="pendingChanges()" [(colorPicker)]="profile.colors.employment" [style.background]="profile.colors.employment" placeholder="Color" [value]="profile.colors.employment">
+                            </ion-item>
+                            <ion-item>
+                                <ion-input style="width: 75%;" type="text" (ionChange)="pendingChanges()" [(ngModel)]="profile.web" placeholder="{{'PROFILE.web' | translate}}"></ion-input>
+                            </ion-item>
+                        </ion-card>
+                        <ion-card>
+                            <ion-item lines="inset">
+                                <ion-icon slot="start" name="call" class="grey"></ion-icon>
+                                <ion-label color="medium">{{'LOGIN.phone' | translate}}</ion-label>
+                                <ion-input type="tel" (ionChange)="phoneChange($event, 'phone')" [value]="profile.phone" placeholder="{{'PROFILE.digits' | translate}}"></ion-input>
+                            </ion-item>
+                            <ion-item lines="inset">
+                                <ion-icon slot="start" name="logo-whatsapp" class="grey"></ion-icon>
+                                <ion-label color="medium">{{'PROFILE.whats' | translate}}</ion-label>
+                                <ion-input type="tel" (ionChange)="phoneChange($event, 'whatsApp')" [value]="profile.whatsApp" placeholder="{{'PROFILE.digits' | translate}}"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-icon slot="start" name="person-add" class="grey"></ion-icon>
+                                <ion-label color="medium">{{'PROFILE.addContact' | translate}}</ion-label>
+                                <ion-checkbox slot="end" [(ngModel)]="profile.addContact" (ionChange)="addPersonChange($event)"></ion-checkbox>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="medium">{{'PROFILE.buttonsColor' | translate}}</ion-label>
+                                <input class="colorPicker" (colorPickerChange)="pendingChanges()" style="width: 50%;" [(colorPicker)]="profile.colors.fillButtons" [style.background]="profile.colors.fillButtons" placeholder="Color" [value]="profile.colors.fillButtons">
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="medium">{{'PROFILE.textFabColor' | translate}}</ion-label>
+                                <input class="colorPicker" (colorPickerChange)="pendingChanges()" style="width: 50%;" [(colorPicker)]="profile.colors.textButtons" [style.background]="profile.colors.textButtons" placeholder="Color" [value]="profile.colors.textButtons">
+                            </ion-item>
+                        </ion-card>
+                        <ion-card>
+                            <ion-item *ngFor="let item of social; let i = index">
+                                <ion-icon slot="start" [name]="item.icon" class="grey"></ion-icon>
+                                <ion-input type="text" [(ngModel)]="item.value" placeholder="{{item.title}}"></ion-input>
+                                <ion-button (click)="socialChange(i)" slot="end" shape="round">
+                                    {{'COMMON.add' | translate}}
+                                </ion-button>
+                            </ion-item>
+                        </ion-card>
+                    </ion-grid>
+                </ion-col>
+
+                <!-- Template preview -->
+                <ion-col size="5">
+                    <div class="smartphone">
+                        <div class="content" [style.background]="profile.colors.background ? profile.colors.background : 'white'">
+                            <app-first [profile]="profile"></app-first>
+                        </div>
+                    </div>
+                    <ion-button class="btn-save" (click)="save()" expand="block" shape="round">
+                        {{'COMMON.save' | translate}}
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ng-container>
+</ion-content>
